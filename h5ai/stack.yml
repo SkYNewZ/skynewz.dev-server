@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  h5ai:
+    image: docker.io/fanvinga/docker-h5ai:latest
+    volumes:
+      - /data/downloads/complete:/share:ro
+    networks:
+      - traefik-network
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 512M
+      placement:
+        constraints: [node.role == manager] # Needed while volume is on this host…
+      labels:
+        - "traefik.frontend.rule=Host:files.skynewz.dev"
+        - "traefik.enable=true"
+        - "traefik.port=80"
+        - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+
+networks:
+  traefik-network:
+    external: true

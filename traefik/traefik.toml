@@ -23,6 +23,7 @@ defaultEntryPoints = ["https"]
   watch = true
   exposedByDefault = false
   network = "traefik-network"
+  swarmMode = true
 
 [acme]
   email = "contact@skynewz.dev"
@@ -31,6 +32,7 @@ defaultEntryPoints = ["https"]
   onHostRule = true
   acmeLogging = true
   caServer = "https://acme-staging-v02.api.letsencrypt.org/directory" # Remove in production
+  # Default: "https://acme-v02.api.letsencrypt.org/directory"
   [acme.dnsChallenge]
     provider = "gandiv5"
     resolvers = ["ns-212-a.gandi.net", "1.1.1.1:53", "8.8.8.8:53"]

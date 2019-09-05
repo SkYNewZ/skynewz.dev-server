@@ -12,11 +12,14 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /data/traefik/traefik.toml:/traefik.toml
       - /data/traefik/acme.json:/acme.json
-    labels:
-      - "traefik.frontend.rule=Host:traefik.skynewz.dev"
-      - "traefik.port=8080"
-      - "traefik.enable=true"
-      - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - "traefik.frontend.rule=Host:traefik.skynewz.dev"
+        - "traefik.port=8080"
+        - "traefik.enable=true"
+        - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
 
 networks:
   traefik-network:
