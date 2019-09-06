@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.7"
 
 services:
   agent:
@@ -17,11 +17,7 @@ services:
 
   portainer:
     image: docker.io/portainer/portainer:1.22.0
-    command: -H tcp://tasks.agent:9001 --tlsskipverify --admin-password-file /run/secrets/admin_password
-    secrets:
-      - admin_password
-    volumes:
-      - /data/portainer/data:/data:/data
+    command: -H tcp://tasks.agent:9001 --tlsskipverify --admin-password "$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
     networks:
       - traefik-network
     deploy:
@@ -36,10 +32,10 @@ services:
         - "traefik.frontend.rule=Host:portainer.skynewz.dev"
         - "traefik.port=9000"
         - "traefik.enable=true"
-
-secrets:
-  admin_password:
-    file: admin_password.txt
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
 
 networks:
   traefik-network:

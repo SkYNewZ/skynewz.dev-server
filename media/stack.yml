@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
   jackett:
@@ -24,6 +24,10 @@ services:
         - "traefik.frontend.rule=Host:jackett.skynewz.dev"
         - "traefik.enable=true"
         - "traefik.port=9117"
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
 
   transmission:
     image: docker.io/linuxserver/transmission:amd64-2.94-r1-ls19
@@ -49,6 +53,10 @@ services:
         - "traefik.enable=true"
         - "traefik.port=9091"
         - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
     networks:
       - traefik-network
 
@@ -74,6 +82,10 @@ services:
         - "traefik.frontend.rule=Host:sonarr.skynewz.dev"
         - "traefik.enable=true"
         - "traefik.port=8989"
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
     networks:
       - traefik-network
 

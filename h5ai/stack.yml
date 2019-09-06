@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
   h5ai:
@@ -20,6 +20,10 @@ services:
         - "traefik.enable=true"
         - "traefik.port=80"
         - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
 
 networks:
   traefik-network:
