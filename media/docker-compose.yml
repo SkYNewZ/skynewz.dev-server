@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  jackett:
+    image: docker.io/linuxserver/jackett:amd64-v0.11.476-ls29
+    volumes:
+      - /data/jackett/config:/config
+      - /data/jackett/downloads:/downloads
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Europe/Paris
+    labels:
+      - "traefik.frontend.rule=Host:jackett.skynewz.dev"
+      - "traefik.enable=true"
+      - "traefik.port=9117"
+    networks:
+      - traefik-network
+
+  transmission:
+    image: docker.io/linuxserver/transmission:amd64-2.94-r1-ls19
+    volumes:
+      - /data/transmission/config:/config
+      - /data/transmission/watch:/watch
+      - /data/downloads:/downloads
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Europe/Paris
+      - TRANSMISSION_WEB_HOME=/kettu/
+    labels:
+      - "traefik.frontend.rule=Host:downloads.skynewz.dev"
+      - "traefik.enable=true"
+      - "traefik.port=9091"
+      - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+    networks:
+      - traefik-network
+
+  sonarr:
+    image: docker.io/linuxserver/sonarr:amd64-3.0.1.527-ls96
+    volumes:
+      - /data/sonarr/config:/config
+      - /data/downloads:/downloads
+      - /data/downloads/complete/tvshow:/tv
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=Europe/Paris
+    labels:
+      - "traefik.frontend.rule=Host:sonarr.skynewz.dev"
+      - "traefik.enable=true"
+      - "traefik.port=8989"
+    networks:
+      - traefik-network
+
+networks:
+  traefik-network:
+    external: true
