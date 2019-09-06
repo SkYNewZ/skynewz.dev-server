@@ -11,7 +11,7 @@ services:
       - PUID=1001
       - TZ=Europe/Paris
     networks:
-      - traefik-network
+      - {{ traefik_network_name }}
     deploy:
       mode: replicated
       replicas: 1
@@ -45,27 +45,27 @@ services:
       replicas: 1
       resources:
         limits:
-          memory: 512M
+          memory: 1024M
       placement:
         constraints: [node.role == manager] # Needed while volume is on this host…
       labels:
         - "traefik.frontend.rule=Host:downloads.skynewz.dev"
         - "traefik.enable=true"
         - "traefik.port=9091"
-        - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+        - "traefik.frontend.auth.basic.users={{ username }}:{{ non_interpolated_password }}"
       update_config:
         parallelism: 1
         delay: 5s
         order: start-first
     networks:
-      - traefik-network
+      - {{ traefik_network_name }}
 
   sonarr:
     image: docker.io/linuxserver/sonarr:amd64-3.0.1.527-ls96
     volumes:
       - /data/sonarr/config:/config
       - /data/downloads:/downloads
-      - /data/downloads/complete/tvshow:/tv
+      - /data/downloads/complete/tvshows:/tv
     environment:
       - PGID=1001
       - PUID=1001
@@ -75,7 +75,7 @@ services:
       replicas: 1
       resources:
         limits:
-          memory: 512M
+          memory: 1024M
       placement:
         constraints: [node.role == manager] # Needed while volume is on this host…
       labels:
@@ -87,8 +87,8 @@ services:
         delay: 5s
         order: start-first
     networks:
-      - traefik-network
+      - {{ traefik_network_name }}
 
 networks:
-  traefik-network:
+  {{ traefik_network_name }}:
     external: true

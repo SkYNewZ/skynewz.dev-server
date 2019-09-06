@@ -6,12 +6,14 @@ services:
     ports:
       - 80:80
       - 443:443
+    env_file:
+      - /opt/traefik/.env
     networks:
-      - traefik-network
+      - {{ traefik_network_name }}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /data/traefik/traefik.toml:/traefik.toml
-      - /data/traefik/acme.json:/acme.json
+      - /opt/traefik/traefik.toml:/traefik.toml
+      - /opt/traefik/acme.json:/acme.json
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -19,12 +21,15 @@ services:
         - "traefik.frontend.rule=Host:traefik.skynewz.dev"
         - "traefik.port=8080"
         - "traefik.enable=true"
-        - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+        - "traefik.frontend.auth.basic.users={{ username }}:{{ non_interpolated_password }}"
       update_config:
         parallelism: 1
         delay: 5s
         order: start-first
+      resources:
+        limits:
+          memory: 1024M
 
 networks:
-  traefik-network:
+  {{ traefik_network_name }}:
     external: true

@@ -17,8 +17,8 @@ services:
         delay: 5s
         order: start-first
     networks:
-      - traefik-network
+      - {{ traefik_network_name }}
 
 networks:
-  traefik-network:
+  {{ traefik_network_name }}:
     external: true

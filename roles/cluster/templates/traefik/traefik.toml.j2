@@ -22,7 +22,7 @@ defaultEntryPoints = ["https"]
   domain = "skynewz.dev"
   watch = true
   exposedByDefault = false
-  network = "traefik-network"
+  network = "{{ traefik_network_name }}"
   swarmMode = true
 
 [acme]

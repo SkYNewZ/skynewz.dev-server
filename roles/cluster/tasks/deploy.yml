@@ -1,0 +1,41 @@
+---
+- name: Install Python modules for "docker_stack"
+  pip:
+    name:
+      - jsondiff
+      - pyyaml
+
+- name: Deploy traefik
+  docker_stack:
+    state: present
+    name: traefik
+    compose:
+      - /opt/traefik/stack.yml
+
+- name: Deploy h5ai
+  docker_stack:
+    state: present
+    name: h5ai
+    compose:
+      - /opt/h5ai/stack.yml
+
+- name: Deploy whoami
+  docker_stack:
+    state: present
+    name: whoami
+    compose:
+      - /opt/whoami/stack.yml
+
+- name: Deploy portainer
+  docker_stack:
+    state: present
+    name: portainer
+    compose:
+      - /opt/portainer/stack.yml
+
+- name: Deploy media
+  docker_stack:
+    state: present
+    name: media
+    compose:
+      - /opt/media/stack.yml

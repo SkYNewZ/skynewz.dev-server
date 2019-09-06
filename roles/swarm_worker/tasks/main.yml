@@ -2,12 +2,18 @@
 - name: Install python dependencies for Swarm
   pip:
     name: docker
+
+- name: Check if Swarm has already been Initialized
+  shell: docker info
+  register: docker_info
+  changed_when: false
     
 - name: Join Docker swarm master
   docker_swarm:
     state: join
     advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     listen_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-    join_token: "{{ hostvars['manager1']['docker_swarm_join_token']['swarm_facts']['JoinTokens']['Worker'] }}"
+    join_token: "{{ hostvars['manager1']['docker_swarm_join_token']['stdout'] }}"
     remote_addrs:
       - "{{ hostvars['manager1']['ansible_default_ipv4']['address'] }}"
+  when: "docker_info.stdout.find('Swarm: inactive') != -1"

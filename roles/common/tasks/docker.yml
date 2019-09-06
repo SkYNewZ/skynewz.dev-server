@@ -1,6 +1,7 @@
 ---
 - name: Check docker-ce is present or not
-  shell: docker --version || true
+  shell: docker --version
+  ignore_errors: true
   register: docker_info
 
 - name: Install docker-ce from https://get.docker.com

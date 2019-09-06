@@ -12,6 +12,8 @@
     - swarm_worker
 
 - hosts: managers
-  remote_user: quentin
+  remote_user: "{{ username }}"
+  become: true
+  become_method: sudo
   roles:
     - cluster

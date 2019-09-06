@@ -1,0 +1,5 @@
+---
+- name: Create "{{ traefik_network_name }}" network
+  docker_network:
+    name: "{{ traefik_network_name }}"
+    driver: overlay

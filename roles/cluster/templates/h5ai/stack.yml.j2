@@ -6,7 +6,7 @@ services:
     volumes:
       - /data/downloads/complete:/share:ro
     networks:
-      - traefik-network
+      - {{ traefik_network_name }}
     deploy:
       mode: replicated
       replicas: 1
@@ -19,12 +19,12 @@ services:
         - "traefik.frontend.rule=Host:files.skynewz.dev"
         - "traefik.enable=true"
         - "traefik.port=80"
-        - "traefik.frontend.auth.basic.users=quentin:$$2y$$05$$JFtRw7TKGfM9RypYigLcW.ilNyTw1WwBMyVeKPVJIuiKTKcYI2kt6"
+        - "traefik.frontend.auth.basic.users={{ username }}:{{ non_interpolated_password }}"
       update_config:
         parallelism: 1
         delay: 5s
         order: start-first
 
 networks:
-  traefik-network:
+  {{ traefik_network_name }}:
     external: true

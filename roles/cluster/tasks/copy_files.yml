@@ -1,0 +1,58 @@
+---
+- name: Copy "h5ai/stack.yml"
+  template:
+    src: h5ai/stack.yml.j2
+    dest: /opt/h5ai/stack.yml
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Copy "media/stack.yml"
+  template:
+    src: media/stack.yml.j2
+    dest: /opt/media/stack.yml
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Copy "portainer/stack.yml"
+  template:
+    src: portainer/stack.yml.j2
+    dest: /opt/portainer/stack.yml
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Copy "traefik/stack.yml"
+  template:
+    src: traefik/stack.yml.j2
+    dest: /opt/traefik/stack.yml
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Copy "traefik/acme.json"
+  copy:
+    src: traefik/acme.json
+    dest: /opt/traefik/acme.json
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0600'
+    force: no
+
+- name: Copy "traefik/.env"
+  copy:
+    src: traefik/.env
+    dest: /opt/traefik/.env
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Copy "traefik/traefik.toml"
+  template:
+    src: traefik/traefik.toml.j2
+    dest: /opt/traefik/traefik.toml
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Copy "whoami/stack.yml"
+  template:
+    src: whoami/stack.yml.j2
+    dest: /opt/whoami/stack.yml
+    owner: "{{ username }}"
+    group: "{{ username }}"

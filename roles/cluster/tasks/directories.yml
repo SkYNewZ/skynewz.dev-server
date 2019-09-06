@@ -1,0 +1,103 @@
+---
+
+### /data DIRECTORIES ###
+- name: Create /data/downloads/complete/tvshows
+  file:
+    path: /data/downloads/complete/tvshows
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/downloads/complete/movies
+  file:
+    path: /data/downloads/complete/movies
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/downloads/complete/other
+  file:
+    path: /data/downloads/complete/other
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/downloads/incomplete
+  file:
+    path: /data/downloads/incomplete
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/sonarr/config
+  file:
+    path: /data/sonarr/config
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/transmission/config
+  file:
+    path: /data/transmission/config
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/transmission/watch
+  file:
+    path: /data/transmission/watch
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/jackett/config
+  file:
+    path: /data/jackett/config
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /data/jackett/downloads
+  file:
+    path: /data/jackett/downloads
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+### /data DIRECTORIES ###
+
+### /opt DIRECTORIES ###
+- name: Create /opt/traefik
+  file:
+    path: /opt/traefik
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /opt/h5ai directory
+  file:
+    path: /opt/h5ai
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /opt/media directory
+  file:
+    path: /opt/media
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /opt/portainer directory
+  file:
+    path: /opt/portainer
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+
+- name: Create /opt/whoami directory
+  file:
+    path: /opt/whoami
+    state: directory
+    group: "{{ username }}"
+    owner: "{{ username }}"
+### /opt DIRECTORIES ###

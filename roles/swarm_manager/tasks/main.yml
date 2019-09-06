@@ -3,9 +3,18 @@
   pip:
     name: docker
 
+- name: Check if Swarm has already been Initialized
+  shell: docker info
+  register: docker_info
+  changed_when: false
+
 - name: Init a new swarm with default parameters
   docker_swarm:
     state: present
     advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
     listen_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  when: "docker_info.stdout.find('Swarm: inactive') != -1"
+
+- name: Get docker swarm worker token
+  shell: docker swarm join-token -q worker
   register: docker_swarm_join_token

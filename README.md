@@ -7,16 +7,17 @@ Docker Swarm &amp; Ansible config files to automate a new server deployment
   <img src="https://docs.traefik.io/img/traefik.logo.png" width="200" height="200">
 </p>
 
+> ⚠️ Support only Debian based distros
+
 ## Requirements
 
 * [Ansible](https://www.ansible.com)
 * Hosts IP address set in [hosts.ini](/hosts.ini)
 * Be log as `root` to these hosts with ssh keys without password
-* ⚠️ Support only Debian based distros
 * Set `GANDIV5_API_KEY` into [`.env` file](roles/cluster/files/traefik/.env.example)
 
 ```bash
-$ ansible-playbook -i hosts.ini site.yml
+$ ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i hosts.ini --ask-become-pass site.yml
 ```
 
 ## Details
@@ -40,7 +41,9 @@ $ ansible-playbook -i hosts.ini site.yml
 - Configure `sshd` jail for `fail2ban`
 - Configure timezone
 - Install docker swarm cluster on given managers and workers
-- 🚸 Create directories required my stacks
-- 🚸 Create needed network for [Traefik](http://traefik.io)
-- 🚸 Deploy all my stacks to this cluster
+- Create directories required by stacks and copy files
+  * stacks in in `/opt`
+  * datas in `/data`
+- Create needed network for [Traefik](http://traefik.io)
+- Deploy all my stacks to this cluster
 - 🚸 Add personal `crontabs`
