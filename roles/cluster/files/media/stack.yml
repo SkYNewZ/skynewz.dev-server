@@ -7,8 +7,8 @@ services:
       - /data/jackett/config:/config
       - /data/jackett/downloads:/downloads
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=1001
+      - PUID=1001
       - TZ=Europe/Paris
     networks:
       - traefik-network
@@ -36,8 +36,8 @@ services:
       - /data/transmission/watch:/watch
       - /data/downloads:/downloads
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=1001
+      - PUID=1001
       - TZ=Europe/Paris
       - TRANSMISSION_WEB_HOME=/kettu/
     deploy:
@@ -67,8 +67,8 @@ services:
       - /data/downloads:/downloads
       - /data/downloads/complete/tvshow:/tv
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=1001
+      - PUID=1001
       - TZ=Europe/Paris
     deploy:
       mode: replicated

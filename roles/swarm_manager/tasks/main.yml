@@ -1,0 +1,11 @@
+---
+- name: Install python dependencies for Swarm
+  pip:
+    name: docker
+
+- name: Init a new swarm with default parameters
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    listen_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  register: docker_swarm_join_token

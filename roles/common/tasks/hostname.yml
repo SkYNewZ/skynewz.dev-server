@@ -1,0 +1,14 @@
+---
+- name: Replace default hostname "{{ ansible_hostname }}" to "{{ hostvars[inventory_hostname]['machine_hostname'] }}" in /etc/hosts
+  replace:
+    path: /etc/hosts
+    regexp: "{{ ansible_hostname }}"
+    replace: "{{ hostvars[inventory_hostname]['machine_hostname'] }}"
+
+- shell: cat /etc/hosts
+  register: hosts_contents
+
+- name: Change hostname to "{{ hostvars[inventory_hostname]['machine_hostname'] }}"
+  hostname:
+    name: "{{ hostvars[inventory_hostname]['machine_hostname'] }}"
+  when: hosts_contents.stdout.find(hostvars[inventory_hostname]['machine_hostname']) != -1

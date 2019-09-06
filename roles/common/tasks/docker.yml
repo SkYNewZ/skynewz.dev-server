@@ -1,0 +1,10 @@
+---
+- name: Check docker-ce is present or not
+  shell: docker --version || true
+  register: docker_info
+
+- name: Install docker-ce from https://get.docker.com
+  shell: curl -fSsL https://get.docker.com | sh
+  when: docker_info.stdout.find('version') == -1
+  args:
+    warn: no

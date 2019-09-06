@@ -1,0 +1,30 @@
+---
+- name: Disable empty password login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?PermitEmptyPasswords"
+    line: "PermitEmptyPasswords no"
+
+- name: Disable remote root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?PermitRootLogin"
+    line: "PermitRootLogin no"
+
+- name: Disable password login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^(#\s*)?PasswordAuthentication '
+    line: "PasswordAuthentication no"
+  when: add_identity_key is success and not add_identity_key is skipped
+
+- name: Enable PAM
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?UsePAM"
+    line: "UsePAM yes"
+
+- name: Restart ssh daemon
+  service:
+    name: sshd
+    state: restarted

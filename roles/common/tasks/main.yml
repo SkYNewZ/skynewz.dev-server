@@ -1,0 +1,28 @@
+---
+- import_tasks: hostname.yml
+
+- name: Set timezone to Europe/Paris
+  timezone:
+    name: Europe/Paris
+
+- name: Install a list of packages
+  apt:
+    name: "{{ packages }}"
+    force_apt_get: true
+    update_cache: true
+  vars:
+    packages:
+      - sudo
+      - vim
+      - fail2ban
+      - curl
+      - htop
+      - python-apt
+      - python3-apt
+      - python-pip
+      - python3-pip
+
+- import_tasks: docker.yml
+- import_tasks: users.yml
+- import_tasks: ssh.yml
+- import_tasks: fail2ban.yml

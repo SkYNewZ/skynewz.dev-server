@@ -1,0 +1,17 @@
+---
+- hosts: managers
+  remote_user: root
+  roles:
+    - common
+    - swarm_manager
+
+- hosts: workers
+  remote_user: root
+  roles:
+    - common
+    - swarm_worker
+
+- hosts: managers
+  remote_user: quentin
+  roles:
+    - cluster

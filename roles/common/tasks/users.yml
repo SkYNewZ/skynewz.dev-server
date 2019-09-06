@@ -1,0 +1,39 @@
+---
+- name: Create a login user
+  user:
+    name: "{{ username }}"
+    password: "{{ password }}"
+    groups:
+      - docker
+      - sudo
+    state: present
+    shell: /bin/bash
+    createhome: yes
+    home: "/home/{{ username }}"
+
+- name: Set authorized key taken from file
+  become_user: "{{ username }}"
+  authorized_key:
+    user: "{{ username }}"
+    state: present
+    key: "{{ lookup('file', '/Users/quentin/.ssh/id_krypton.pub') }}"
+  register: add_identity_key
+
+- name: Disable root password
+  user:
+    name: root
+    password: '!'
+
+- name: Enable bash color prompt for "{{ username }}"
+  become_user: "{{ username }}"
+  lineinfile:
+    path: "/home/{{ username }}/.bashrc"
+    regexp: "^#force_color_prompt=yes"
+    line: "force_color_prompt=yes"
+
+- name: Some aliases
+  become_user: "{{ username }}"
+  lineinfile:
+    path: "/home/{{ username }}/.bashrc"
+    regexp: "^#alias ll='ls -l'"
+    line: "alias l='ls -lah --color=auto'"
